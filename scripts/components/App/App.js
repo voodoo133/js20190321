@@ -21,6 +21,11 @@ export class App {
     this._initTable(this._data);
 
   } 
+  
+  tradeItem(id) {
+    const coin = this._data.find(coin => coin.id === id);
+    this._tradeWidget.trade(coin)
+  }
 
   _initPortfolio() {
     this._portfolio = new Portfolio({
@@ -33,16 +38,13 @@ export class App {
     this._tradeWidget = new TradeWidget({
       element: this._el.querySelector('[data-element="trade-widget"]'),
     })
-
-    this._tradeWidget.trade(this._data[0])
-
-
   }
 
   _initTable(data) {
     this._table = new Table({
       data,
       element: this._el.querySelector('[data-element="table"]'),
+      onRowClick: id => this.tradeItem(id),
     })
   }
     

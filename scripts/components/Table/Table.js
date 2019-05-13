@@ -1,9 +1,23 @@
 export class Table {
-  constructor({ data, element }) {
+  constructor({ data, element, onRowClick }) {
     this._el = element;
+    this._onRowClickCallback = onRowClick;
+
      
     this._render(data);
+
+    this._el.addEventListener('click', e => {
+      this._onRowClick(e);
+    })
   } 
+
+  _onRowClick(e) {
+    const target = e.target.closest('tr');
+    if (!target) return;
+
+    const id = target.dataset.id;
+    this._onRowClickCallback(id);
+  }
     
      _render(data) {
         this._el.innerHTML = `
@@ -19,7 +33,7 @@ export class Table {
           <tbody>
             ${
               data.map(coin => `
-                <tr>
+                <tr data-id="${coin.id}">
                     <td>${coin.name}</td>
                     <td>${coin.symbol}</td>
                     <td>${coin.rank}</td>
