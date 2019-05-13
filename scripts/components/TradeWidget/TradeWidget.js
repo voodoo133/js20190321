@@ -1,7 +1,29 @@
 export class TradeWidget {
   constructor({ element }) {
       this._el = element;
-      this._total = 0;
+
+      this._el.addEventListener('input', e => {
+        if (!e.target.closest('#amount')) return;
+
+        const value = +e.target.value;
+        this._updateDisplay(value);
+      })
+  }
+
+  trade(item) {
+    this._currentItem = item;
+    this._total = 0;
+
+    this._render(item);
+  }
+
+  close() {
+    this._el.querySelector('.modal').classList.remove('open')
+  }
+
+  _updateDisplay(value) {
+    this._totalEl = this._totalEl || this._el.querySelector('#item-total')
+    this._totalEl.textContent = this._currentItem.price * value;
   }
 
   _render(item) {
@@ -27,6 +49,7 @@ export class TradeWidget {
             <a href="#!" class="modal-close waves-effect waves-teal btn-flat">Buy</a>
             <a href="#!" class="modal-close waves-effect waves-teal btn-flat">Cancel</a>
           </div>
+      </div>
       </div>
       `
   }

@@ -12,10 +12,12 @@ export class App {
      
     this._render();
 
+    this._data = DataService.getCurrencies();
+
     this._initPortfolio();
     this._initTradeWidget();
 
-    this._data = DataService.getCurrencies();
+    
     this._initTable(this._data);
 
   } 
@@ -31,6 +33,10 @@ export class App {
     this._tradeWidget = new TradeWidget({
       element: this._el.querySelector('[data-element="trade-widget"]'),
     })
+
+    this._tradeWidget.trade(this._data[0])
+
+
   }
 
   _initTable(data) {
