@@ -1,4 +1,5 @@
 import { Table } from '../Table/Table.js';
+import DataService from '../../services/DataService.js';
 
 export class App {
   constructor({ element }) {
@@ -6,13 +7,15 @@ export class App {
      
     this._render();
 
-    this._initTable();
+    this._data = DataService.getCurrencies();
+    this._initTable(this._data);
 
   } 
 
-  _initTable() {
+  _initTable(data) {
     this._table = new Table({
-      element: document.querySelector('[data-element="table"]')
+      data,
+      element: document.querySelector('[data-element="table"]'),
     })
   }
     

@@ -1,11 +1,11 @@
 export class Table {
-  constructor({ element }) {
+  constructor({ data, element }) {
     this._el = element;
      
-    this._render();
+    this._render(data);
   } 
     
-     _render() {
+     _render(data) {
         this._el.innerHTML = `
         <table class="data-table highlight"> 
           <thead>
@@ -16,6 +16,18 @@ export class Table {
                 <th>Price</th>
             </tr>
           </thead>
+          <tbody>
+            ${
+              data.map(coin => `
+                <tr>
+                    <td>${coin.name}</td>
+                    <td>${coin.symbol}</td>
+                    <td>${coin.rank}</td>
+                    <td>${coin.price}</td>
+                </tr>
+              `).join('')
+            }
+          </tbody>
         </table>
         `;
     }
