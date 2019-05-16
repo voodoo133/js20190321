@@ -103,7 +103,23 @@ const data = [
 
 const DataService = {
   getCurrencies() {
-    return data;
+    // return data;
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://api.coinpaprika.com/v1/coins', false);
+
+    xhr.send();
+
+    // 4. Если код ответа сервера не 200, то это ошибка
+    if (xhr.status != 200) {
+      // обработать ошибку
+      alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+    } else {
+      // вывести результат
+      let responseData = JSON.parse(xhr.responseText);
+      return responseData.slice(0, 10);
+    }
   }
 }
 
