@@ -1,5 +1,9 @@
 import BaseComponent from '../BaseComponent/BaseComponent.js';
 
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 export class TradeWidget extends BaseComponent {
   constructor({ element }) {
       super();
@@ -27,7 +31,15 @@ export class TradeWidget extends BaseComponent {
           this._el.dispatchEvent(buyEvent);
           this.close();
         }
+      })
 
+      this._el.addEventListener('keydown', e => {
+        if (!e.target.closest('#amount')) return;
+
+        const { key } = e;
+        if (!isNumeric(key) && key !== 'Backspace') {
+          e.preventDefault();
+        }
       })
   }
 
