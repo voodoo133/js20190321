@@ -19,7 +19,6 @@ export class App {
 
     
     this._initTable(this._data);
-
   } 
   
   tradeItem(id) {
@@ -38,13 +37,20 @@ export class App {
     this._tradeWidget = new TradeWidget({
       element: this._el.querySelector('[data-element="trade-widget"]'),
     })
+
+    this._tradeWidget.on('buy', e => {
+      console.log(e.detail)
+    })
   }
 
   _initTable(data) {
     this._table = new Table({
       data,
       element: this._el.querySelector('[data-element="table"]'),
-      onRowClick: id => this.tradeItem(id),
+    })
+
+    this._table.on('rowClick', e => {
+      this.tradeItem(e.detail.id)
     })
   }
     

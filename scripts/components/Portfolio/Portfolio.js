@@ -4,17 +4,24 @@ export class Portfolio {
       this._portfolioWorth = 0;
       this._balance = balance;
       this._render();
+
+      let elems = document.querySelectorAll('.collapsible');
+      M.Collapsible.init(elems);
   }
 
   _render() {
       this._el.innerHTML = `
-          <div class="card-panel hoverable center-align">
-              <p>
-                  Current balance: ${this._balance}
-                  <br />
-                  Portfolio Worth: ${this._portfolioWorth}
-              </p>
-          </div>
+            <ul class="collapsible portfolio">
+              <li>
+                <p class="collapsible-header">
+                    Current balance: ${this._balance}.
+                    Portfolio Worth: ${this._portfolioWorth}
+                </p>
+                <div class="collapsible-body">
+                  Nothing here yet!
+                </div>
+              </li>
+            </ul>
       `
   }
 }
