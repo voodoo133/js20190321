@@ -39,7 +39,8 @@ export class App {
     })
 
     this._tradeWidget.on('buy', e => {
-      console.log(e.detail)
+      const { item, amount } = e.detail;
+      this._portfolio.addItem(item, amount);
     })
   }
 
