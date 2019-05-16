@@ -12,13 +12,13 @@ export class App {
      
     this._render();
 
-    this._data = DataService.getCurrencies();
+    DataService.getCurrencies(data => {
+      this._data = data;
+      this._initTable(this._data);
+    });
 
     this._initPortfolio();
-    this._initTradeWidget();
-
-    
-    this._initTable(this._data);
+    this._initTradeWidget();    
   } 
   
   tradeItem(id) {
