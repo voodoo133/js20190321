@@ -1,7 +1,7 @@
 import { Table } from '../Table/Table.js';
 import { Portfolio } from '../Portfolio/Portfolio.js';
 import { TradeWidget } from '../TradeWidget/TradeWidget.js';
-
+import { Search } from '../Search/Search.js';
 
 import DataService from '../../services/DataService.js';
 
@@ -18,7 +18,8 @@ export class App {
     });
 
     this._initPortfolio();
-    this._initTradeWidget();    
+    this._initTradeWidget();   
+    this._initSearch(); 
   } 
   
   tradeItem(id) {
@@ -54,22 +55,42 @@ export class App {
       this.tradeItem(e.detail.id)
     })
   }
+  
+  _initSearch() {
+    this._search = new Search({
+      element: this._el.querySelector('[data-element="search"]'),
+      onInput: str => {
+        DataService.getCurrencies(data => {
+          this._data = data;
+          
+          this._data = this._data.filter(coin => {
+            console.log(coin.name);
+            return coin.name.toLowerCase().includes(str.toLowerCase());
+          });
+          
+          this._initTable(this._data);
+        });
+      }
+    });
+  }
     
-     _render() {
-        this._el.innerHTML = `
-            <div class="row">
-                <div class="col s12">
-                    <h1>Tiny Crypto Market</h1>
-                </div>
+  _render() {
+    this._el.innerHTML = `
+        <div class="row">
+            <div class="col s12">
+                <h1>Tiny Crypto Market</h1>
             </div>
-            <div class="row portfolio-row">
-                <div class="col s6 offset-s6" data-element="portfolio"></div>
-            </div>
-
-            <div class="row">
-              <div data-element="table" class="col s12"></div>
-            </div>
-            <div data-element="trade-widget"></div>
-        `;
-    }
+        </div>
+        <div class="row portfolio-row">
+            <div class="col s6 offset-s6" data-element="portfolio"></div>
+        </div>
+        <div class="row">
+          <div data-element="search" class="col s8"></div>
+        </div>
+        <div class="row">
+          <div data-element="table" class="col s12"></div>
+        </div>
+        <div data-element="trade-widget"></div>
+    `;
+  }
 }
