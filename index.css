@@ -4,18 +4,48 @@ html, body {
 
 #app {
     display: flex;
-    height: 100%;
     flex-direction: column;
     justify-content: flex-end;
+}
+
+.portfolio {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.collapsible-body {
+  background: white;
+}
+p.collapsible-header {
+  margin: 0;
 }
 
 .row {
     width: 100%;
 }
 
+tr th,
 tr td {
     cursor: pointer;
 }
+
+th::after {
+  margin-left: 5px;
+}
+
+th.sort-asc::after {
+  content: '\25B2';
+  
+  color: #0dab0d;
+}
+
+th.sort-desc::after {
+  content: '\25BC';
+  
+  color: #ff0505;
+}
+
 
 .modal.open {
     z-index: 1003;
